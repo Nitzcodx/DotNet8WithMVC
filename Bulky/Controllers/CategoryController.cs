@@ -26,14 +26,66 @@ namespace Bulky.Controllers
 		[HttpPost]
 		public IActionResult Create(Category category)
 		{
-			if(ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
-                _bulkyDbContext.Categories.Add(category);
+				_bulkyDbContext.Categories.Add(category);
+				_bulkyDbContext.SaveChanges();
+				return RedirectToAction("Category");
+			}
+			return View();
+
+		}
+
+		public IActionResult Edit(int? id)
+		{
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+			var category = _bulkyDbContext.Categories.FirstOrDefault(cat => cat.CategoryId == id);
+            return View(category);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _bulkyDbContext.Categories.Update(category);
                 _bulkyDbContext.SaveChanges();
                 return RedirectToAction("Category");
             }
-			return View();
-			
+            return View();
+
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var category = _bulkyDbContext.Categories.FirstOrDefault(cat => cat.CategoryId == id);
+            return View(category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+			if(id == null || id == 0)
+			{
+				return BadRequest();
+			}
+
+			var category = _bulkyDbContext.Categories.Find(id);
+
+			if(category == null)
+			{
+				return NotFound();
+			}
+			_bulkyDbContext.Categories.Remove(category);
+			_bulkyDbContext.SaveChanges();
+			return RedirectToAction("Category");
 		}
-	}
+    }
 }

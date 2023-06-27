@@ -1,26 +1,27 @@
 ﻿@model Category
-<h1>Create Category</h1>
+<h1>Delete Category</h1>
 
 <form method="post">
     <div asp-validation-summary="All"></div>
+    <input asp-for="CategoryId" hidden />
     <div class="mb-3">
         <label asp-for="CategoryName" class="form-label"></label>
-        <input asp-for="CategoryName" class="form-control"/>
+        <input asp-for="CategoryName" class="form-control" disabled />
         <span asp-validation-for="CategoryName" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="DisplayOrder" class="form-label"></label>
-        <input asp-for="DisplayOrder" class="form-control" />
+        <input asp-for="DisplayOrder" class="form-control" disabled/>
         <span asp-validation-for="DisplayOrder" class="text-danger"></span>
     </div>
     <div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-controller="Category" asp-action="Category" class="btn btn-secondary">Back to list</a>
     </div>
 </form>
 
 @section Scripts{
     @{
-        <partial name="_ValidationScriptsPartial.cshtml"/>
+        <partial name="_ValidationScriptsPartial.cshtml" />
     }
 }

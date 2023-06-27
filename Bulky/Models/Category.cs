@@ -10,7 +10,7 @@ namespace Bulky.Models
 
         [Required]
         [DisplayName("Category Name")]
-        [MaxLength(5)]
+        [MaxLength(20)]
         public required string CategoryName { get; set; }
 
         [Required]
