@@ -1,18 +1,30 @@
 ﻿@model List<Category>;
-<h1>Category</h1>
+<div class="row">
+    <div class="col-9">
+        <h1>Category</h1>
+    </div>
+    <div class="col-3">
+        <a asp-controller="Category" asp-action="Create" class="btn btn-dark">
+            Create Category
+        </a>
+    </div>
+</div>
 
-<table>
-    <tr>
-        <th>
-            <tr>Name</tr>
-            <tr>Display Order</tr>
-        </th>
-    </tr>
-    @foreach (var category in Model.OrderBy(x => x.DisplayOrder))
-    {
+<table class="table table-striped table-hover">
+    <thead>
         <tr>
-            <td>@category.CategoryName</td>
-            <td>@category.DisplayOrder</td>
+            <th scope="col">Name</th>
+            <th scope="col">Display Order</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var category in Model.OrderBy(x => x.DisplayOrder))
+        {
+            <tr>
+                <td scope="row">@category.CategoryName</td>
+                <td>@category.DisplayOrder</td>
+            </tr>
+        }
+    </tbody>
+
 </table>
