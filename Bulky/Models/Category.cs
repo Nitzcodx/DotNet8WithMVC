@@ -8,14 +8,10 @@ namespace Bulky.Models
         [Key]
         public int CategoryId { get; set; }
 
-        [Required]
-        [DisplayName("Category Name")]
-        [MaxLength(20)]
+        [Required, MaxLength(20), DisplayName("Category Name")]
         public required string CategoryName { get; set; }
 
-        [Required]
-        [DisplayName("Display Order")]
-        [Range(0, 20, ErrorMessage = "Wrong Range")]
+        [Required, Range(0, 20, ErrorMessage = "Wrong Range"), DisplayName("Display Order")]
         public int DisplayOrder { get; set; }
     }
 }
