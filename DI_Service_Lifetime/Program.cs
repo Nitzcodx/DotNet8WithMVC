@@ -1,12 +1,13 @@
-using Bulky;
-using Bulky.DataAccess.Data;
-using Microsoft.EntityFrameworkCore;
+using DI_Service_Lifetime.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<BulkyDbContext>(output => output.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
+
+builder.Services.AddTransient<ITransientService, TransientService>();
+builder.Services.AddScoped<IScopedService, ScopedService>();
+builder.Services.AddSingleton<ISingletonService, SingletonService>();
 
 var app = builder.Build();
 
