@@ -7,16 +7,16 @@ namespace Bulky.Controllers
 {
 	public class CategoryController : Controller
 	{
-        private readonly ICategoryRepository _categoryRepository;
+		private readonly IUnitOfWork _unitOfWork;
 
-		public CategoryController(ICategoryRepository categoryRepository)
+		public CategoryController(IUnitOfWork unitOfWork)
 		{
-			_categoryRepository = categoryRepository;
+			_unitOfWork = unitOfWork;
 		}
 
 		public IActionResult Category()
 		{
-			var categories = _categoryRepository.GetAll();
+			var categories = _unitOfWork.Category.GetAll();
 			return View(categories);
 		}
 		 
@@ -30,8 +30,8 @@ namespace Bulky.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-                _categoryRepository.Add(category);
-                _categoryRepository.Save();
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
 				TempData["success"] = "Category created successfully!";
 				return RedirectToAction("Category");
 			}
@@ -45,7 +45,7 @@ namespace Bulky.Controllers
 			{
 				return NotFound();
 			}
-			var category = _categoryRepository.Get(cat => cat.CategoryId == id);
+			var category = _unitOfWork.Category.Get(cat => cat.CategoryId == id);
             return View(category);
         }
 
@@ -54,8 +54,8 @@ namespace Bulky.Controllers
         {
             if (ModelState.IsValid)
             {
-                _categoryRepository.Update(category);
-                _categoryRepository.Save();
+                _unitOfWork.Category.Update(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully!";
                 return RedirectToAction("Category");
             }
@@ -69,8 +69,8 @@ namespace Bulky.Controllers
             {
                 return NotFound();
             }
-            var category = _categoryRepository.Get(cat => cat.CategoryId == id);
-			_categoryRepository.Remove(category);
+            var category = _unitOfWork.Category.Get(cat => cat.CategoryId == id);
+            _unitOfWork.Category.Remove(category);
             return View(category);
         }
 
@@ -82,14 +82,14 @@ namespace Bulky.Controllers
 				return BadRequest();
 			}
 
-			var category = _categoryRepository.Get(cat => cat.CategoryId == id);
+			var category = _unitOfWork.Category.Get(cat => cat.CategoryId == id);
 
 			if(category == null)
 			{
 				return NotFound();
 			}
-            _categoryRepository.Remove(category);
-            _categoryRepository.Save();
+            _unitOfWork.Category.Remove(category);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Category");
 		}

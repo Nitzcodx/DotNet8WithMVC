@@ -13,11 +13,6 @@ namespace Bulky.DataAccess.Repository
             _bulkyDbContext = bulkyDbContext;
         }
 
-        public void Save()
-        {
-            _bulkyDbContext.SaveChanges();
-        }
-
         public void Update(Category category)
         {
             _bulkyDbContext.Categories.Update(category);
